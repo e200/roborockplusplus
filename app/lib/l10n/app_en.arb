@@ -710,5 +710,10 @@
   "tabNow": "Now",
   "tabPlan": "Plan",
   "tabHistory": "History",
-  "tabRobot": "Robot"
+  "tabRobot": "Robot",
+  "setDryTime": "Drying time",
+  "setWaterTemp": "Mop wash water",
+  "tempRoom": "Room temperature",
+  "tempWarm": "Warm",
+  "tempHot": "Hot"
 }

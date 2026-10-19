@@ -3,6 +3,7 @@ import '../history/clean_record.dart';
 import '../protocol/rpc.dart';
 import '../queue/queue_engine.dart';
 import '../robot/alerts.dart';
+import '../robot/robot_status.dart';
 import 'l10n.dart';
 
 /// User-facing text for an error from the robot or the cloud. Unknown errors get a generic line; their English
@@ -23,6 +24,15 @@ String errorText(L10n l, Object e) => switch (e) {
   CloudException(:final message) => message,
   _ => l.errUnexpected,
 };
+
+/// Localized labels for the robot status (kept out of the robot layer so it has no Flutter dependency).
+extension RobotStatusText on RobotStatus {
+  String stateLabel(L10n l) => l.robotState('c$state');
+
+  String fanLabel(L10n l) => l.fanLevel('c${activeFanPower ?? fanPower}');
+
+  String waterLabel(L10n l) => l.waterLevel('c${activeWaterMode ?? waterMode}');
+}
 
 String pauseText(L10n l, PauseReason r) => switch (r.kind) {
   PauseKind.notStarted => l.pauseNotStarted,

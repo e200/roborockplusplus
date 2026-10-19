@@ -42,6 +42,8 @@ const _settingIcons = {
   'auto_empty': Icons.auto_delete_rounded,
   'empty_mode': Icons.air_rounded,
   'dryer': Icons.dry_rounded,
+  'dry_time': Icons.hourglass_bottom_rounded,
+  'water_temp': Icons.thermostat_rounded,
   'wash_mode': Icons.local_laundry_service_rounded,
   'wash_interval': Icons.timer_outlined,
   'corner_mop': Icons.rounded_corner_rounded,

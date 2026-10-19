@@ -1,5 +1,3 @@
-import '../l10n/l10n.dart';
-
 /// Robot state from `get_status` (Saros 20, V1 protocol).
 class RobotStatus {
   final int state;
@@ -63,10 +61,4 @@ class RobotStatus {
   bool get busy => inCleaning != 0;
 
   bool get docked => const {8, 100, 22, 23, 25, 26}.contains(state) && !busy;
-
-  String stateLabel(L10n l) => l.robotState('c$state');
-
-  String fanLabel(L10n l) => l.fanLevel('c${activeFanPower ?? fanPower}');
-
-  String waterLabel(L10n l) => l.waterLevel('c${activeWaterMode ?? waterMode}');
 }

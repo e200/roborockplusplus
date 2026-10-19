@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:developer' as developer;
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:typed_data/typed_buffers.dart';
@@ -69,7 +69,8 @@ class MqttChannel {
         if (!connected.isCompleted) {
           connected.completeError(RobotException(RobotErrorKind.noLink, 'Cloud connection failed: $e'));
         } else {
-          debugPrint('MQTT: $e');
+          // The protocol layer stays free of Flutter so the command-line tools can use it.
+          developer.log('$e', name: 'mqtt');
         }
       },
     );

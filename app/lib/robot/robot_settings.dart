@@ -47,6 +47,19 @@ int? _field(Object? raw, String key) {
   return m is Map && m[key] is num ? (m[key] as num).toInt() : null;
 }
 
+/// `app_set_dryer_setting` as the official plugin sends it: the drying time always goes along with the status
+/// (verified on the Saros 20: the other fields of `on` are kept).
+({String method, Object params}) _dryer(Object? raw, {int? status, int? dryTime}) {
+  final on = (_first(raw) as Map?)?['on'];
+  return (
+    method: 'app_set_dryer_setting',
+    params: {
+      'on': {'dry_time': dryTime ?? (on is Map ? on['dry_time'] : null) ?? 7200},
+      'status': status ?? _field(raw, 'status') ?? 1,
+    },
+  );
+}
+
 ({String method, Object params}) _status(String method, int v, Object? _) => (method: method, params: {'status': v});
 
 /// The settings shown on the Robot tab, with texts in [l]'s language.
@@ -104,7 +117,31 @@ List<RobotSetting> robotSettings(L10n l) => [
     title: l.setDryer,
     readMethod: 'app_get_dryer_setting',
     read: (r) => _field(r, 'status'),
-    write: (v, raw) => _status('app_set_dryer_setting', v, raw),
+    write: (v, raw) => _dryer(raw, status: v),
+  ),
+  RobotSetting(
+    id: 'dry_time',
+    section: SettingSection.dock,
+    title: l.setDryTime,
+    readMethod: 'app_get_dryer_setting',
+    options: {
+      for (final h in [2, 3, 4, 6, 8]) h * 3600: l.hours(h),
+    },
+    read: (r) {
+      final on = (_first(r) as Map?)?['on'];
+      return on is Map && on['dry_time'] is num ? (on['dry_time'] as num).toInt() : null;
+    },
+    write: (v, raw) => _dryer(raw, dryTime: v),
+  ),
+  RobotSetting(
+    id: 'water_temp',
+    section: SettingSection.dock,
+    title: l.setWaterTemp,
+    readMethod: 'get_wash_water_temperature',
+    // 3 and 4 are steam modes in the plugin; shown as "current" only if the robot reports them.
+    options: {0: l.tempRoom, 1: l.tempWarm, 2: l.tempHot},
+    read: (r) => _field(r, 'wash_water_temperature'),
+    write: (v, _) => (method: 'set_wash_water_temperature', params: {'values': v}),
   ),
   RobotSetting(
     id: 'wash_mode',

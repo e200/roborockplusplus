@@ -1189,4 +1189,19 @@ class L10nPt extends L10n {
 
   @override
   String get tabRobot => 'Robô';
+
+  @override
+  String get setDryTime => 'Tempo de secagem';
+
+  @override
+  String get setWaterTemp => 'Água da lavagem da mopa';
+
+  @override
+  String get tempRoom => 'Temperatura ambiente';
+
+  @override
+  String get tempWarm => 'Morna';
+
+  @override
+  String get tempHot => 'Quente';
 }

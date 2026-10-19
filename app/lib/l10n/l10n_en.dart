@@ -1163,4 +1163,19 @@ class L10nEn extends L10n {
 
   @override
   String get tabRobot => 'Robot';
+
+  @override
+  String get setDryTime => 'Drying time';
+
+  @override
+  String get setWaterTemp => 'Mop wash water';
+
+  @override
+  String get tempRoom => 'Room temperature';
+
+  @override
+  String get tempWarm => 'Warm';
+
+  @override
+  String get tempHot => 'Hot';
 }

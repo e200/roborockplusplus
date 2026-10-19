@@ -1879,6 +1879,36 @@ abstract class L10n {
   /// In en, this message translates to:
   /// **'Robot'**
   String get tabRobot;
+
+  /// No description provided for @setDryTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Drying time'**
+  String get setDryTime;
+
+  /// No description provided for @setWaterTemp.
+  ///
+  /// In en, this message translates to:
+  /// **'Mop wash water'**
+  String get setWaterTemp;
+
+  /// No description provided for @tempRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Room temperature'**
+  String get tempRoom;
+
+  /// No description provided for @tempWarm.
+  ///
+  /// In en, this message translates to:
+  /// **'Warm'**
+  String get tempWarm;
+
+  /// No description provided for @tempHot.
+  ///
+  /// In en, this message translates to:
+  /// **'Hot'**
+  String get tempHot;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

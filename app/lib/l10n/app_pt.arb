@@ -297,5 +297,10 @@
   "tabNow": "Agora",
   "tabPlan": "Planear",
   "tabHistory": "Histórico",
-  "tabRobot": "Robô"
+  "tabRobot": "Robô",
+  "setDryTime": "Tempo de secagem",
+  "setWaterTemp": "Água da lavagem da mopa",
+  "tempRoom": "Temperatura ambiente",
+  "tempWarm": "Morna",
+  "tempHot": "Quente"
 }
