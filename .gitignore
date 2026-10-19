@@ -1,0 +1,17 @@
+# Só o nosso código vai para o repositório: tudo o resto fica de fora por omissão.
+/*
+!/.gitignore
+!/README.md
+!/app/
+!/docs/
+!/rr.py
+!/probe.py
+!/monitor_end.py
+!/test_live.py
+
+# Nunca: sessão e chaves da conta, código e recursos da Roborock (APK, descompilado, plugins),
+# mapas e registos reais da casa.
+secrets/
+*.log
+*.out
+__pycache__/

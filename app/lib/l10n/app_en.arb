@@ -1,0 +1,714 @@
+{
+  "@@locale": "en",
+  "robotState": "{code, select, c1{Starting} c2{Off the dock} c3{Idle} c4{Remote control} c5{Cleaning} c6{Returning to dock} c7{Manual mode} c8{On the dock} c9{Charging problem} c10{Paused} c11{Spot cleaning} c12{Error} c13{Shutting down} c14{Updating} c15{Docking} c16{Going to target} c17{Cleaning zone} c18{Cleaning rooms} c22{Emptying the bin} c23{Washing the mop} c25{Washing the mop} c26{Going to wash the mop} c29{Mapping} c100{Fully charged} c101{Offline} other{State}}",
+  "@robotState": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "fanLevel": "{code, select, c101{quiet} c102{balanced} c103{turbo} c104{max} c108{max+} c105{off} c106{custom} c110{smart} other{—}}",
+  "@fanLevel": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "waterLevel": "{code, select, c200{no water} c221{very low} c225{low} c230{mild} c235{medium} c240{moderate} c245{high} c250{extreme} other{—}}",
+  "@waterLevel": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "robotErrorText": "{code, select, c1{Laser blocked. Check that nothing covers the sensor on top.} c2{Bumper stuck. Tap it to free it.} c3{Wheels off the floor. Put the robot down.} c4{Cliff sensors dirty or blocked. Clean them.} c5{Main brush stuck. Remove hair and strings.} c6{Side brush stuck.} c7{Wheels stuck.} c8{The robot is trapped. Free it.} c9{Dustbin missing.} c10{Dustbin filter problem.} c12{Low battery.} c13{Charging error. Clean the dock and robot contacts.} c14{Battery error.} c15{Wall sensor dirty.} c16{Robot tilted. Put it on a flat surface.} c17{Side brush error.} c18{Fan error.} c19{Dock problem.} c20{Optical sensor dirty. Clean it.} c21{Vertical bumper pressed.} c22{Cannot find the dock.} c23{Could not return to the dock.} c24{Inside a no-go zone.} c25{Camera dirty or blocked.} c27{Mop lift mechanism stuck.} c28{Robot on a carpet with the mop.} c29{Filter blocked. Clean or replace it.} c30{Virtual wall detected.} c31{Cannot cross the carpet.} c32{Internal error. Restart the robot.} c34{Auto-empty error.} c35{Auto-empty error.} c36{Mop roller problem.} c37{Mop roller problem.} c38{Clean water tank empty or not seated.} c39{Dirty water tank full or not seated.} c40{Wash tray filter clogged.} c41{Clean water tank problem.} c42{Dock cleaning brush problem.} c43{Dock cleaning brush problem.} c44{Dock filter problem.} c45{Mop roller problem.} c48{Problem refilling water.} c49{Problem draining water.} c51{Temperature protection on. Wait for it to cool down.} c52{Wash tray problem.} c53{Wash tray full of water.} c54{Mop holder fell off.} c55{Check the wash tray.} c56{Audio error.} other{Error {code}.}}",
+  "@robotErrorText": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "dockErrorText": "{code, select, c32{Dock bag or filter missing.} c33{Auto-empty fan error.} c34{Auto-empty duct clogged.} c35{Auto-empty voltage error.} c38{Clean water tank empty.} c39{Dirty water tank full.} c42{Dock maintenance brush stuck.} c44{Dirty water tank lid open.} c46{Dock tank missing.} c53{Cleaning tank full or clogged.} other{Dock error {code}.}}",
+  "@dockErrorText": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "alertRobotTitle": "The robot needs help",
+  "alertDockTitle": "The dock needs attention",
+  "alertWaterTitle": "Out of water",
+  "alertWaterBody": "Fill the dock's clean water tank.",
+  "sectionCarpets": "Carpets",
+  "sectionDock": "Dock",
+  "sectionCleaning": "Cleaning",
+  "sectionRobot": "Robot",
+  "setCarpetMode": "With the mop, on carpets",
+  "optAvoid": "Avoid",
+  "optLiftMop": "Lift the mop",
+  "optIgnore": "Ignore",
+  "optCross": "Cross",
+  "setCarpetBoost": "Boost suction on carpets",
+  "setCarpetDeep": "Deep carpet cleaning",
+  "setAutoEmpty": "Empty the bin automatically",
+  "setEmptyMode": "Emptying strength",
+  "optSmart": "Smart",
+  "optLight": "Light",
+  "optBalanced": "Balanced",
+  "optMax": "Max",
+  "optDeep": "Deep",
+  "optVeryDeep": "Very deep",
+  "setDryer": "Dry the mop after washing",
+  "setWashMode": "Mop washing",
+  "setWashInterval": "Rewash the mop every",
+  "setWashIntervalSub": "During the clean",
+  "minutes": "{n} min",
+  "@minutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "setCornerMop": "Extend the mop into corners",
+  "setFurniture": "Recognise furniture",
+  "setFurnitureSub": "Cleans better around and under furniture",
+  "setLed": "Button light",
+  "chAlerts": "Robot alerts",
+  "chAlertsDesc": "Errors, dock problems and low water",
+  "chCleans": "Finished cleans",
+  "chCleansDesc": "Summary of each clean",
+  "chStatus": "Robot status",
+  "chStatusDesc": "What the robot is doing and what comes next",
+  "roomN": "Room {id}",
+  "@roomN": {
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "robot": "Robot",
+  "robotCharging": "Robot charging",
+  "errNoLink": "No connection to the robot",
+  "errTimeout": "The robot did not answer in time. Try again.",
+  "errUnsupported": "The robot does not support this.",
+  "errRobot": "The robot refused the command.",
+  "errAccountNotFound": "No Roborock account found for this email.",
+  "errTooManyCodes": "Too many codes requested. Try again later.",
+  "errInvalidCode": "Invalid code.",
+  "errAcceptTerms": "Accept the terms in the Roborock app first.",
+  "errSessionExpired": "Session expired. Log in again.",
+  "errNoHome": "This account has no home.",
+  "errNoInternet": "No connection to the Roborock cloud.",
+  "errUnexpected": "Something went wrong. Try again.",
+  "pauseNotStarted": "The robot did not start the clean.",
+  "pauseRobotError": "The robot stopped with an error: {error}",
+  "@pauseRobotError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "pauseStartFailed": "Could not start the next clean.",
+  "pauseInterrupted": "The previous clean was interrupted. Continue with the rest of the queue?",
+  "outcomeFinished": "Finished",
+  "outcomeUnreachable": "Area unreachable",
+  "outcomeLostLocation": "Lost its location",
+  "outcomeWashError": "Washing error",
+  "outcomeInterrupted": "Interrupted",
+  "sourceButton": "Button",
+  "sourceApp": "App",
+  "sourceSchedule": "Schedule",
+  "sourceRoutine": "Routine",
+  "sourceVoice": "Voice assistant",
+  "sourceOther": "Other",
+  "routineQueuedTitle": "Routine \"{name}\"",
+  "@routineQueuedTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "routineQueuedBody": "Queued at its scheduled time.",
+  "queuePaused": "Queue paused",
+  "jobZones": "{count, plural, =1{Zone} other{{count} zones}} ({area} m²)",
+  "@jobZones": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "wholeHome": "Whole home",
+  "cleaningRoom": "Cleaning: {room}",
+  "@cleaningRoom": {
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "minutesLeft": "~{n} min left",
+  "@minutesLeft": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "batteryPercent": "battery {n}%",
+  "@batteryPercent": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "upNext": "up next: {job}",
+  "@upNext": {
+    "placeholders": {
+      "job": {
+        "type": "String"
+      }
+    }
+  },
+  "queuePausedLower": "queue paused",
+  "cleanGeneric": "Clean",
+  "jobFinished": "{job} finished",
+  "@jobFinished": {
+    "placeholders": {
+      "job": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanInterrupted": "Clean interrupted",
+  "jobOutcome": "{job}: {outcome}",
+  "@jobOutcome": {
+    "placeholders": {
+      "job": {
+        "type": "String"
+      },
+      "outcome": {
+        "type": "String"
+      }
+    }
+  },
+  "minutesArea": "{min} min · {area} m²",
+  "@minutesArea": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "mopWashes": "{count, plural, =1{1 mop wash} other{{count} mop washes}}",
+  "@mopWashes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cleanZonesTitle": "{count, plural, =1{Clean this zone} other{Clean {count} zones}}",
+  "@cleanZonesTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "zonesQueueNote": "They join the queue after the current clean, one after another. Nothing is cancelled.",
+  "addToQueue": "Add to queue",
+  "clean": "Clean",
+  "drawZoneHint": "Drag on the map to draw a zone. You can draw several.",
+  "zonesArea": "{count, plural, =1{1 zone} other{{count} zones}} · {area} m²",
+  "@zonesArea": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "next": "Next",
+  "addZone": "Add zone",
+  "zone": "Zone",
+  "cleanFinished": "Clean finished",
+  "connecting": "Connecting to the robot…",
+  "cleaning": "Cleaning",
+  "suctionLevel": "suction {level}",
+  "@suctionLevel": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "waterLevelLine": "water {level}",
+  "@waterLevelLine": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "pause": "Pause",
+  "resume": "Resume",
+  "adjust": "Adjust",
+  "dock": "Dock",
+  "findMe": "Where are you?",
+  "cleanWholeHome": "Clean the whole home",
+  "addToQueueLong": "Add to queue",
+  "adjustRunning": "Adjust the running clean",
+  "adjustRunningSub": "Applies now, nothing is cancelled.",
+  "upNextTitle": "Up next",
+  "resumeQueue": "Resume queue",
+  "nowJob": "Now: {job}",
+  "@nowJob": {
+    "placeholders": {
+      "job": {
+        "type": "String"
+      }
+    }
+  },
+  "cancel": "Cancel",
+  "skipToNext": "Skip to the next one",
+  "stopping": "Stopping…",
+  "skip": "Skip",
+  "removeFromQueue": "Remove from queue",
+  "notifications": "Notifications",
+  "now": "Now",
+  "recent": "Recent",
+  "noAlertsYet": "No alerts yet.",
+  "linkLocal": "Connected over the local network",
+  "linkCloud": "Connected through the cloud",
+  "linkOffline": "No connection",
+  "fanMopOnly": "Mop only",
+  "fanQuiet": "Quiet",
+  "fanBalanced": "Balanced",
+  "fanTurbo": "Turbo",
+  "fanMax": "Max",
+  "fanMaxPlus": "Max+",
+  "waterOff": "No water",
+  "waterLow": "Low",
+  "waterMedium": "Medium",
+  "waterHigh": "High",
+  "waterExtreme": "Extreme",
+  "routeFast": "Fast",
+  "routeStandard": "Standard",
+  "routeDeepPlus": "Deep+",
+  "styleSmart": "Smart",
+  "styleVacuum": "Vacuum",
+  "styleVacuumMop": "Vacuum and mop",
+  "styleVacuumThenMop": "Vacuum, then mop",
+  "styleMop": "Mop only",
+  "styleCustom": "Custom",
+  "sumSmart": "smart",
+  "sumVacuumThenMop": "vacuum, then mop",
+  "sumMopOnly": "mop only",
+  "sumVacuum": "vacuum {level}",
+  "@sumVacuum": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "sumMop": "mop {level}",
+  "@sumMop": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "sumRoute": "route {route}",
+  "@sumRoute": {
+    "placeholders": {
+      "route": {
+        "type": "String"
+      }
+    }
+  },
+  "smartHint": "The robot adapts suction, water and route to the floor and dirt in each area.",
+  "suction": "Suction",
+  "mop": "Mop",
+  "mopRoute": "Mop route",
+  "passes": "Passes",
+  "passOne": "One",
+  "passTwo": "Two",
+  "passThree": "Three",
+  "modeRooms": "Rooms",
+  "modeZones": "Zones",
+  "modePoint": "Go to",
+  "modeHome": "Whole home",
+  "hintRooms": "Tap the rooms in the order you want them cleaned.",
+  "hintZones": "Drag on the map to draw zones.",
+  "hintPoint": "Tap where the robot should go.",
+  "hintHome": "Cleans the whole home in the order the robot thinks best.",
+  "howToClean": "How to clean",
+  "appliesToAllRooms": "Applies to all the chosen rooms.",
+  "roomOnlySettings": "Settings for this room only.",
+  "routineSummary": "{count, plural, =1{1 job} other{{count} jobs}} · {when}",
+  "@routineSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "joinsQueueNoCancel": "joins the queue without cancelling the current clean",
+  "startsNow": "starts now",
+  "cleanNow": "Clean now",
+  "newRoutine": "New routine",
+  "routine": "Routine",
+  "name": "Name",
+  "repeat": "Repeat",
+  "weekdaysNarrow": "M T W T F S S",
+  "atTime": "At {time}",
+  "@atTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "unscheduled": "No schedule (manual only)",
+  "time": "Time",
+  "changeTime": "Change time",
+  "enabled": "Enabled",
+  "save": "Save",
+  "deleteRoutine": "Delete routine",
+  "pickRoomsOnMap": "Pick rooms on the map",
+  "cleanRooms": "{count, plural, =1{Clean 1 room} other{Clean {count} rooms}}",
+  "@cleanRooms": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "queueRooms": "{count, plural, =1{Queue 1 room} other{Queue {count} rooms}}",
+  "@queueRooms": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "drawZoneOnMap": "Draw a zone on the map",
+  "cleanZones": "{count, plural, =1{Clean 1 zone} other{Clean {count} zones}}",
+  "@cleanZones": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "queueZones": "{count, plural, =1{Queue 1 zone} other{Queue {count} zones}}",
+  "@queueZones": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tapPointOnMap": "Tap a point on the map",
+  "goHere": "Go here",
+  "queueWholeHome": "Queue the whole home",
+  "plan": "Plan",
+  "runRoutine": "Run routine {name}",
+  "@runRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "undoLastZone": "Undo the last zone",
+  "how": "How",
+  "saveAsRoutine": "Save as routine",
+  "clearSelection": "Clear selection",
+  "settingsOf": "Settings for {name}",
+  "@settingsOf": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "consMainBrush": "Main\nbrush",
+  "consSideBrush": "Side\nbrush",
+  "consFilter": "Filter",
+  "consSensors": "Sensors",
+  "startsAt": "Starts at",
+  "endsAt": "Ends at",
+  "resetPart": "Reset {name}?",
+  "@resetPart": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "resetPartSub": "Do this after replacing or cleaning the part.",
+  "reset": "Reset",
+  "stateBattery": "{state} · battery {n}%",
+  "@stateBattery": {
+    "placeholders": {
+      "state": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "connectingShort": "Connecting…",
+  "emptyBin": "Empty bin",
+  "washMop": "Wash mop",
+  "map": "Map",
+  "editMap": "Edit map",
+  "editMapSub": "No-go zones, no-mop zones and virtual walls",
+  "maintenance": "Maintenance",
+  "cleanNowShort": "clean now",
+  "hours": "{n} h",
+  "@hours": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "gaugeHint": "Tap a gauge after cleaning or replacing the part.",
+  "currentValue": "Current ({value})",
+  "@currentValue": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "doNotDisturb": "Do not disturb",
+  "quietAtNight": "Quiet at night",
+  "quietAtNightSub": "Does not start cleans or speak",
+  "from": "From",
+  "to": "to",
+  "soundSafety": "Sound and safety",
+  "voiceVolume": "Voice volume",
+  "childLock": "Child lock",
+  "childLockSub": "Disables the buttons on the robot",
+  "appearance": "Appearance",
+  "theme": "Theme",
+  "themeSystem": "Automatic",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "logOut": "Log out",
+  "durationMin": "{m} min",
+  "@durationMin": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "durationHourMin": "{h} h {m} min",
+  "@durationHourMin": {
+    "placeholders": {
+      "h": {
+        "type": "int"
+      },
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "todayAt": "Today, {time}",
+  "@todayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "yesterdayAt": "Yesterday, {time}",
+  "@yesterdayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "dateAt": "{date}, {time}",
+  "@dateAt": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "Md"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "history": "History",
+  "historySub": "What the robot did and how long it took",
+  "last7Days": "Last 7 days",
+  "cleansUnit": "cleans",
+  "timeLabel": "Time",
+  "in7Days": "in 7 days",
+  "areaLabel": "Area",
+  "m2In7Days": "m² in 7 days",
+  "allTime": "All time: {count} cleans · {hours} h · {area} m²",
+  "@allTime": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "hours": {
+        "type": "int"
+      },
+      "area": {
+        "type": "int"
+      }
+    }
+  },
+  "perRoom": "Per room",
+  "perRoomSub": "Measured by the app during the cleans it followed.",
+  "roomStats": "{count}× · average {duration}",
+  "@roomStats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "cleans": "Cleans",
+  "noRecordsYet": "No records yet.",
+  "washes": "{count, plural, =1{1 wash} other{{count} washes}}",
+  "@washes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "obstaclesAvoided": "{count, plural, =1{1 obstacle avoided} other{{count} obstacles avoided}}",
+  "@obstaclesAvoided": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fasterThanAvg": "{m} min faster than the average for these rooms",
+  "@fasterThanAvg": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "slowerThanAvg": "{m} min slower than the average for these rooms",
+  "@slowerThanAvg": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "omissionNote": "The robot flagged areas it could not clean.",
+  "activity": "Activity",
+  "days14": "14 days",
+  "weeks8": "8 weeks",
+  "weekOf": "Week of {date}",
+  "@weekOf": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "Md"
+      }
+    }
+  },
+  "shortDate": "{date}",
+  "@shortDate": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "Md"
+      }
+    }
+  },
+  "noCleans": "no cleans",
+  "activityDetail": "{count, plural, =1{1 clean} other{{count} cleans}} · {min} min · {area} m²",
+  "@activityDetail": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "min": {
+        "type": "int"
+      },
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "recordMapGone": "The robot no longer has this clean's map. From now on the app keeps each clean's map on the phone, so you can always see it.",
+  "toolNoGo": "No-go",
+  "toolNoGoHint": "Drag to mark where the robot cannot go. Tap one to delete it.",
+  "toolNoMop": "No mop",
+  "toolNoMopHint": "Drag to mark where it vacuums but does not mop. Tap one to delete it.",
+  "toolWall": "Wall",
+  "toolWallHint": "Drag a line the robot cannot cross. Tap one to delete it.",
+  "saveNotShownYet": "The robot accepted it, but the map does not show the changes yet. Try again shortly.",
+  "restrictions": "{count, plural, =0{No restrictions} =1{1 restriction} other{{count} restrictions}}",
+  "@restrictions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "undo": "Undo",
+  "deleteAll": "Delete all",
+  "saveToRobot": "Save to robot",
+  "noChanges": "No changes",
+  "errNoRobots": "This account has no robots.",
+  "loginPitch": "Everything the official app does, plus what it lacks: a cleaning queue, changes without cancelling, a clear map. Sign in with your Roborock account.",
+  "emailHint": "your@email.com",
+  "codeHint": "code from the email",
+  "signIn": "Sign in",
+  "sendCode": "Send code",
+  "changeEmail": "Change email",
+  "sending": "Sending…",
+  "loading": "Loading",
+  "choose": "Choose",
+  "tabNow": "Now",
+  "tabPlan": "Plan",
+  "tabHistory": "History",
+  "tabRobot": "Robot"
+}
