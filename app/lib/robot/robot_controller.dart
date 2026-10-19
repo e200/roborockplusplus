@@ -25,9 +25,12 @@ import 'robot_commands.dart';
 import 'robot_status.dart';
 
 /// Live state for the UI, and owner of the queue and the history.
-/// Robot status every 3 s; map every 3 s while cleaning and every 60 s at rest.
+/// Robot status every 3 s (every second right after a command); map every second while cleaning, every 60 s
+/// at rest.
 class RobotController extends ChangeNotifier implements QueueActions {
-  static const _mapBusyEvery = Duration(seconds: 3);
+  /// The robot's position only comes with the map (≈300 ms per fetch over the cloud), so while cleaning it is
+  /// fetched every second, like the official app. In the background service nobody is looking at it.
+  Duration get _mapBusyEvery => background ? const Duration(seconds: 30) : const Duration(seconds: 1);
   static const _mapIdleEvery = Duration(seconds: 60);
 
   final RobotClient client;
@@ -44,6 +47,9 @@ class RobotController extends ChangeNotifier implements QueueActions {
   RobotMap? map;
   MapGeometry? geometry;
   Map<int, String> roomNames = const {};
+
+  /// Room type per segment (`tag` in `get_multi_maps_list`), for the icon next to each name.
+  Map<int, int> roomTags = const {};
   ({int remainingSeconds, int percent})? estimate;
   Map<String, int>? consumables;
   ({int seconds, int areaMm2, int count})? totals;
@@ -102,6 +108,8 @@ class RobotController extends ChangeNotifier implements QueueActions {
     }
     final names = store.readJson('room_names');
     if (names is Map) roomNames = {for (final e in names.entries) int.parse('${e.key}'): '${e.value}'};
+    final tags = store.readJson('room_tags');
+    if (tags is Map) roomTags = {for (final e in tags.entries) int.parse('${e.key}'): e.value as int};
     final h = store.readJson('history');
     if (h is List) history = [for (final r in h) CleanRecord.fromJson(Map<String, dynamic>.from(r))];
   }
@@ -126,6 +134,7 @@ class RobotController extends ChangeNotifier implements QueueActions {
     // 1 s clock; the real pace (1 s right after a command, 3 s otherwise) comes from PollSchedule.
     _statusTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (_poll.due(DateTime.now())) _tick();
+      _maybeRefreshMap();
     });
   }
 
@@ -136,6 +145,8 @@ class RobotController extends ChangeNotifier implements QueueActions {
       roomNames = {for (final e in mapping.entries) e.key: home.rooms[e.value] ?? l.roomN(e.key)};
       _namesLoaded = true;
       unawaited(store.writeJson('room_names', {for (final e in roomNames.entries) '${e.key}': e.value}));
+      roomTags = roomTagsFrom(await client.call('get_multi_maps_list'));
+      unawaited(store.writeJson('room_tags', {for (final e in roomTags.entries) '${e.key}': e.value}));
     } on Exception {
       // without names the map shows "Room N"
     }
@@ -178,6 +189,11 @@ class RobotController extends ChangeNotifier implements QueueActions {
       _ticking = false;
     }
     notifyListeners();
+    _maybeRefreshMap();
+  }
+
+  /// Checked on every clock tick, independently of the status pace (refreshMap skips while one is in flight).
+  void _maybeRefreshMap() {
     final every = status?.busy == true ? _mapBusyEvery : _mapIdleEvery;
     if (DateTime.now().difference(_lastMap) >= every) unawaited(refreshMap());
   }
@@ -185,13 +201,14 @@ class RobotController extends ChangeNotifier implements QueueActions {
   Future<void> refreshMap() async {
     if (_mapLoading) return;
     _mapLoading = true;
+    // Paced from the start of the request, so a 300 ms fetch still gives one map per second.
+    _lastMap = DateTime.now();
     try {
       final next = MapParser.parse(await client.map());
       final grid = next.grid;
       // Recomputing outlines is expensive; only when the grid changes (the robot discovers or erases areas).
       if (grid != null && (geometry == null || !_sameGrid(map?.grid, grid))) geometry = MapGeometry.from(grid);
       map = next;
-      _lastMap = DateTime.now();
       notifyListeners();
     } on Exception catch (e) {
       error ??= e;
@@ -487,4 +504,16 @@ class RobotController extends ChangeNotifier implements QueueActions {
     client.close();
     super.dispose();
   }
+}
+
+/// Room types from a `get_multi_maps_list` reply (the current map's `rooms[].tag`).
+Map<int, int> roomTagsFrom(Object? reply) {
+  final first = reply is List && reply.isNotEmpty ? reply.first : reply;
+  final maps = first is Map ? first['map_info'] : null;
+  final rooms = maps is List && maps.isNotEmpty && maps.first is Map ? (maps.first as Map)['rooms'] : null;
+  return {
+    if (rooms is List)
+      for (final r in rooms)
+        if (r is Map && r['id'] is int && r['tag'] is int) r['id'] as int: r['tag'] as int,
+  };
 }

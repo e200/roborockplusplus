@@ -372,6 +372,7 @@ class _PlanScreenState extends State<PlanScreen> {
                         map: map,
                         geometry: geometry,
                         roomNames: c.roomNames,
+                        roomTags: c.roomTags,
                         selectedRooms: _mode == PlanMode.rooms ? _rooms : const [],
                         onRoomTap: _mode == PlanMode.rooms ? _toggleRoom : null,
                         zones: _zones,

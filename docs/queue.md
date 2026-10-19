@@ -4,9 +4,10 @@
 
 | Need | Command | Status |
 |---|---|---|
-| One task with a different mode per room | `app_segment_clean_subdivision` `{data:[{id, fan_power, water_box_mode, mop_mode, repeat, seq_type, mop_type?, mop_power?}], repeat, clean_order_mode, is_new_clean, auto_dry, auto_dustCollection}` | format taken from the plugin; untested |
+| One task with a different mode per room | `app_segment_clean_subdivision` `{data:[{id, fan_power, water_box_mode, mop_mode, repeat, seq_type, mop_type?, mop_power?}], repeat, clean_order_mode, is_new_clean, auto_dry, auto_dustCollection}` | **rejected on fw 02.55.44** (`-10007 invalid params`) with the plugin's item shape `{id, fan_power, water_box_mode, mop_mode, seq_type, repeat}`, as an object or a list, `is_new_clean` 0 or 1. Per-room modes therefore run through the queue. Next lead: `set_customize_clean_mode` (custom mode per room; empty on this robot) |
 | The same for drawn zones | `app_zoned_clean_subdivision` | unconfirmed |
 | Room order | `set_clean_sequence` / `get_clean_sequence` | exists |
+| Zone clean | `app_zoned_clean [[x0, y0, x1, y1, passes]]` | **tested 2026-10-19**: 1×1 m zone, `complete=1`, `clean_type=2`, 1.7 m² in 3 min 19 s |
 | Skip the current room | `app_skip_current_cleaning_area` | exists |
 | Change suction and water mid-clean | `set_custom_mode`, `set_water_box_custom_mode` | **tested: applies to the running task** |
 | Change the mop route mid-clean | `set_mop_mode` | **tested: only changes the default; the running task keeps its route** |
@@ -66,3 +67,20 @@ starting. That saves dock trips and extra washes. Only jobs that have not starte
   Living room"). When the app is swiped away, the service runs the engine itself.
 - iOS: there is no continuous background execution. With the app closed, the queue only advances if the engine runs
   elsewhere (a hub). That is why the engine is a Dart module with no UI dependencies.
+
+## Map refresh
+
+The robot's position only arrives inside the map (`get_map_v1`, cloud only, ≈300 ms per fetch, ~470 KB raw).
+While cleaning the app fetches it every second, paced from the start of each request; the background service, with
+nobody looking, every 30 s. At rest, every 60 s.
+
+## Other findings (2026-10-19)
+
+- `get_multi_maps_list` reports `max_multi_map: 1`: this robot keeps a single map, so multiple floors are not possible.
+  It also lists an automatic map backup (`bak_maps`) and each room's type (`tag`: 1 bedroom, 13 dining room,
+  14 kitchen, 15 bathroom), which the app shows as icons.
+- Room editing commands exist (`name_segment`, `split_segment`, `merge_segment`); their parameters come straight from
+  the plugin's map selection. They change the map permanently, so they are not tried without the owner's go-ahead.
+- Voice: `get_current_sound` → `language: en`. Installing another voice downloads a package (`dnld_install_sound`)
+  from a cloud list that is not in the plugin; not pursued.
+

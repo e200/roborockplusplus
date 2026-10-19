@@ -18,6 +18,16 @@ IconData furnitureIcon(int type) => switch (type) {
   _ => Icons.chair_alt_rounded,
 };
 
+/// Room type icon (`tag` from `get_multi_maps_list`), confirmed against the official app on the reference home:
+/// 1 = bedroom, 13 = dining room, 14 = kitchen, 15 = bathroom. Other types get no icon.
+IconData? roomTypeIcon(int? tag) => switch (tag) {
+  1 => Icons.bed_rounded,
+  13 => Icons.restaurant_rounded,
+  14 => Icons.soup_kitchen_rounded,
+  15 => Icons.wc_rounded,
+  _ => null,
+};
+
 /// Types the official app does not draw on the map (44 shows up in bathrooms and the official app hides it).
 const hiddenFurnitureTypes = {44};
 
@@ -83,6 +93,9 @@ class MapView extends StatefulWidget {
   final RobotMap map;
   final MapGeometry geometry;
   final Map<int, String> roomNames;
+
+  /// Room types, for the icon next to each name.
+  final Map<int, int> roomTags;
   final int? currentRoom;
   final Set<int> doneRooms;
 
@@ -123,6 +136,7 @@ class MapView extends StatefulWidget {
     required this.map,
     required this.geometry,
     this.roomNames = const {},
+    this.roomTags = const {},
     this.currentRoom,
     this.doneRooms = const {},
     this.selectedRooms = const [],
@@ -154,7 +168,7 @@ class _MapViewState extends State<MapView> with TickerProviderStateMixin {
   }
 
   /// The robot glides from its previous to its new position between readings.
-  late final _move = AnimationController(vsync: this, duration: const Duration(milliseconds: 2500));
+  late final _move = AnimationController(vsync: this, duration: const Duration(milliseconds: 1000));
   Offset? _from, _to;
   Offset? _dragStart, _dragEnd;
 
@@ -260,6 +274,7 @@ class _MapViewState extends State<MapView> with TickerProviderStateMixin {
                         geometry: widget.geometry,
                         style: style,
                         // Rooms without a name in the official app still get a readable label.
+                        roomTags: widget.roomTags,
                         roomNames: {
                           for (final id in widget.geometry.rooms.keys) id: widget.roomNames[id] ?? context.l.roomN(id),
                         },
@@ -409,6 +424,9 @@ class MapPainter extends CustomPainter {
   final MapGeometry geometry;
   final MapStyle style;
   final Map<int, String> roomNames;
+
+  /// Room types, for the icon next to each name.
+  final Map<int, int> roomTags;
   final int? currentRoom;
   final Set<int> doneRooms;
   final List<int> selectedRooms;
@@ -424,6 +442,7 @@ class MapPainter extends CustomPainter {
     required this.geometry,
     required this.style,
     required this.roomNames,
+    this.roomTags = const {},
     required this.currentRoom,
     required this.doneRooms,
     this.selectedRooms = const [],
@@ -526,7 +545,7 @@ class MapPainter extends CustomPainter {
     }
   }
 
-  void _drawIcon(Canvas canvas, IconData icon, Offset center, double size) {
+  void _drawIcon(Canvas canvas, IconData icon, Offset center, double size, {Color? color}) {
     final tp = TextPainter(
       textDirection: TextDirection.ltr,
       text: TextSpan(
@@ -535,7 +554,7 @@ class MapPainter extends CustomPainter {
           fontFamily: icon.fontFamily,
           package: icon.fontPackage,
           fontSize: size,
-          color: style.label.withValues(alpha: 0.75),
+          color: color ?? style.label.withValues(alpha: 0.75),
         ),
       ),
     )..layout();
@@ -603,7 +622,10 @@ class MapPainter extends CustomPainter {
       final order = selectedRooms.indexOf(room.id);
       final badge = order >= 0 ? 16 * textScale : 0.0;
       final gap = order >= 0 ? 4 * textScale : 0.0;
-      final width = badge + gap + tp.width;
+      final icon = roomTypeIcon(roomTags[room.id]);
+      final iconSize = icon == null ? 0.0 : 16 * textScale;
+      final iconGap = icon == null ? 0.0 : 3 * textScale;
+      final width = badge + gap + iconSize + iconGap + tp.width;
       var rect = Rect.fromCenter(center: room.labelAnchor, width: width, height: tp.height);
       // The robot covers the name when it is on top of it: the label moves below the robot.
       final robot = map.robot == null ? null : _proj.toCanvas(map.robot!);
@@ -612,7 +634,12 @@ class MapPainter extends CustomPainter {
         rect = rect.shift(Offset(robot.dx - rect.center.dx, robot.dy + robotRadius + tp.height / 2 - rect.center.dy));
       }
       if (order >= 0) _drawBadge(canvas, Offset(rect.left + badge / 2, rect.center.dy), '${order + 1}');
-      tp.paint(canvas, Offset(rect.left + badge + gap, rect.top));
+      if (icon != null) {
+        final c = Offset(rect.left + badge + gap + iconSize / 2, rect.center.dy);
+        canvas.drawCircle(c, iconSize / 2, Paint()..color = style.labelHalo.withValues(alpha: 0.85));
+        _drawIcon(canvas, icon, c, iconSize * 0.7, color: style.label);
+      }
+      tp.paint(canvas, Offset(rect.left + badge + gap + iconSize + iconGap, rect.top));
     }
   }
 
@@ -675,5 +702,6 @@ class MapPainter extends CustomPainter {
       old.doneRooms != doneRooms ||
       !listEquals(old.selectedRooms, selectedRooms) ||
       old.style.background != style.background ||
-      old.textScale != textScale;
+      old.textScale != textScale ||
+      old.roomTags != roomTags;
 }

@@ -51,7 +51,14 @@ void main() {
           home: Scaffold(
             body: RepaintBoundary(
               key: key,
-              child: MapView(map: map, geometry: geometry, roomNames: names, currentRoom: 7, doneRooms: const {5}),
+              child: MapView(
+                map: map,
+                geometry: geometry,
+                roomNames: names,
+                roomTags: const {1: 1, 2: 15, 3: 1, 4: 1, 5: 13, 6: 15, 7: 14, 8: 1},
+                currentRoom: 7,
+                doneRooms: const {5},
+              ),
             ),
           ),
         ),

@@ -156,6 +156,7 @@ class _MapEditScreenState extends State<MapEditScreen> {
                         map: base,
                         geometry: geometry,
                         roomNames: c.roomNames,
+                        roomTags: c.roomTags,
                         showRobot: false,
                         zones: pendingZones,
                         lines: pendingWalls,

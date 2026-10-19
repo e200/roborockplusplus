@@ -72,6 +72,7 @@ class _RecordMapScreenState extends State<RecordMapScreen> {
                         map: map,
                         geometry: geometry,
                         roomNames: widget.controller.roomNames,
+                        roomTags: widget.controller.roomTags,
                         showRobot: false,
                         highlightPath: true,
                       ),

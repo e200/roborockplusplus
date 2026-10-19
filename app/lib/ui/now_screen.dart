@@ -74,6 +74,7 @@ class _NowScreenState extends State<NowScreen> {
                       map: map,
                       geometry: geometry,
                       roomNames: c.roomNames,
+                      roomTags: c.roomTags,
                       currentRoom: status?.busy == true ? (status!.currentRoom ?? map.robotRoom) : null,
                       active: status?.busy == true,
                       // Zones drawn now + those already queued, to show what comes next.
